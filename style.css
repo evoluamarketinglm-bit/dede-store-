@@ -1,0 +1,894 @@
+
+:root{
+  color-scheme:dark;
+  --bg:#000000;
+  --surface:#101010;
+  --surface-2:#161616;
+  --circle:#1c1c1c;
+  --text:#ffffff;
+  --muted:#b7b7b7;
+  --line:rgba(255,255,255,.12);
+  --accent:#bdbdbd;
+  --accent-strong:#d0d0d0;
+  --accent-soft:rgba(255,255,255,.12);
+  --header-height:94px;
+  --topbar-height:38px;
+  --circle-size:98px;
+  --card-width:124px;
+  --item-gap:16px;
+  --section-bottom:44px;
+  font-family:Inter,Helvetica,Arial,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-height) + var(--topbar-height) + 18px)}
+body{margin:0;background:var(--bg);color:var(--text);min-width:320px;overflow-x:hidden}
+body.overlay-open{overflow:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--accent-strong);outline-offset:4px;border-radius:4px}
+.skip-link{position:fixed;top:-100px;left:12px;z-index:500;background:#fff;color:#000;padding:12px}
+.skip-link:focus{top:12px}
+
+.sticky-shell{position:sticky;top:0;z-index:140;background:#000}
+.announcement-bar{
+  position:relative;
+  height:var(--topbar-height);
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  background:#000;
+  border-bottom:1px solid rgba(255,255,255,.18);
+}
+.announcement-track{
+  display:flex;
+  align-items:center;
+  gap:42px;
+  white-space:nowrap;
+  min-width:max-content;
+  padding-inline:18px;
+  color:var(--accent-strong);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  animation:marquee 16s linear infinite;
+}
+.announcement-track span{position:relative}
+.announcement-track span::after{
+  content:"•";
+  margin-left:42px;
+  color:rgba(255,255,255,.35);
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.header-inner{
+  position:relative;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:10px;
+  max-width:1280px;
+  min-height:var(--header-height);
+  padding:10px 14px;
+  margin:0 auto;
+}
+.header-side{display:flex;align-items:center}
+.header-side--left{justify-content:flex-start}
+.header-side--right{justify-content:flex-end;gap:10px}
+.icon-button{
+  display:inline-grid;
+  place-items:center;
+  width:56px;
+  height:56px;
+  border:1.5px solid rgba(0,0,0,.28);
+  border-radius:50%;
+  color:#151515;
+  background:#f4f4f4;
+  padding:0;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 0 0 1px rgba(0,0,0,.04);
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.icon-button svg{display:block;width:28px;height:28px}
+.icon-button:hover,.icon-button[aria-expanded="true"],.icon-link:hover{
+  color:#fff;
+  background:rgba(255,255,255,.16);
+  border-color:var(--accent-strong);
+  box-shadow:0 0 0 4px rgba(255,255,255,.08);
+}
+.icon-button:active{transform:scale(.96)}
+.icon-button:focus-visible{outline:3px solid rgba(255,255,255,.9);outline-offset:3px;border-radius:50%}
+.brand{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-width:0;
+  padding:4px 0;
+}
+.brand img{
+  display:block;
+  width:min(100%,168px);
+  max-height:72px;
+  object-fit:contain;
+}
+.featured-brand{width:100%;max-width:1920px;margin:0 auto 28px;background:#000;overflow:hidden}
+.featured-brand img{display:block;width:100%;height:auto;aspect-ratio:1916 / 821;object-fit:contain;background:#000}
+
+.whatsapp-floating{
+  position:fixed;
+  right:calc(18px + env(safe-area-inset-right, 0px));
+  bottom:calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index:150;
+  display:grid;
+  place-items:center;
+  width:62px;
+  height:62px;
+  border:2px solid rgba(255,255,255,.96);
+  border-radius:50%;
+  background:#25d366;
+  color:#fff;
+  box-shadow:0 5px 18px rgba(0,0,0,.42);
+  transition:transform .18s ease,background-color .18s ease;
+}
+.whatsapp-floating svg{display:block;width:34px;height:34px;fill:currentColor}
+.whatsapp-floating:hover{background:#1db954;transform:translateY(-2px)}
+.whatsapp-floating:focus-visible{outline:3px solid var(--accent-strong);outline-offset:4px;border-radius:50%}
+main{width:100%;margin:0 auto}
+.liga-section{max-width:1080px;margin:0 auto;padding:0 0 var(--section-bottom);scroll-margin-top:calc(var(--header-height) + var(--topbar-height) + 14px)}
+/* Os banners externos podem conter um filete claro no rodapé.
+   Mantemos a imagem em sua proporção natural e cobrimos somente os
+   últimos pixels, sem redimensionar nem alterar a arte original. */
+.banner-container{
+  position:relative;
+  width:100%;
+  max-width:1080px;
+  margin-inline:auto;
+  background:#000;
+  overflow:hidden;
+  line-height:0;
+}
+.banner-container img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:auto;
+  object-fit:contain;
+  border:0;
+  border-radius:0;
+  background:#000;
+}
+.banner-container::after{
+  content:"";
+  position:absolute;
+  right:0;
+  bottom:-1px;
+  left:0;
+  height:5px;
+  background:#000;
+  pointer-events:none;
+}
+.carousel{margin-top:18px;position:relative}
+.carousel-viewport{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;touch-action:pan-x pan-y;cursor:grab;-webkit-overflow-scrolling:touch}
+.carousel-viewport::-webkit-scrollbar{display:none}
+.carousel-viewport.is-dragging{cursor:grabbing;user-select:none}
+.carousel-track{display:flex;width:max-content;min-width:100%}
+.carousel-set{display:flex;align-items:flex-start;gap:var(--item-gap);flex:0 0 auto;padding-right:var(--item-gap)}
+.club-card{display:flex;flex:0 0 var(--card-width);width:var(--card-width);min-width:0;flex-direction:column;align-items:center;gap:10px;text-align:center;outline-offset:3px;user-select:none}
+.club-card:hover .club-circle,.club-card:focus-visible .club-circle{background:#272727;transform:translateY(-1px)}
+.club-card.is-unavailable{cursor:default}
+.club-card.is-unavailable .club-circle{opacity:.8}
+.club-circle{
+  position:relative;
+  width:var(--circle-size);
+  height:var(--circle-size);
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, rgba(180,180,180,.22), rgba(255,255,255,.08) 45%, rgba(16,16,16,1) 100%);
+  border:1.8px solid rgba(180,180,180,.58);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),0 10px 20px rgba(0,0,0,.28);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  transition:background .18s ease,transform .18s ease,border-color .18s ease;
+}
+.club-circle img{display:block;width:85%;height:85%;object-fit:contain;pointer-events:none;-webkit-user-drag:none;visibility:hidden;position:relative;z-index:2}
+.club-fallback{display:flex;align-items:center;justify-content:center;position:absolute;inset:0;color:#efefef;font-size:17px;letter-spacing:.04em;font-weight:700;z-index:1}
+.club-circle.has-image img{visibility:visible}.club-circle.has-image .club-fallback{display:none}.club-circle.has-fallback img{display:none}
+.club-name{width:100%;font-size:10.8px;line-height:1.35;letter-spacing:.03em;font-weight:700;text-align:center;text-transform:uppercase;overflow-wrap:break-word;hyphens:auto;min-height:27px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.carousel-controls{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:19px}
+.carousel-arrow{
+  display:inline-grid;place-items:center;flex:0 0 auto;
+  width:56px;height:56px;padding:0;
+  color:var(--accent-strong);background:#1c1c1c;
+  border:1.8px solid rgba(180,180,180,.62);
+  border-radius:50%;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+  transition:background-color .18s ease,color .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.carousel-arrow svg{display:block;width:30px;height:30px}
+.carousel-arrow:hover{color:#fff;background:rgba(255,255,255,.16);border-color:var(--accent-strong);transform:translateY(-1px);box-shadow:0 0 0 4px rgba(255,255,255,.08)}
+.carousel-arrow:active{transform:scale(.95)}
+.carousel-arrow:focus-visible{outline:3px solid rgba(255,255,255,.9);outline-offset:4px;border-radius:50%}
+.site-footer{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:21px 18px 26px;color:#999;font-size:10px;letter-spacing:.025em}
+.site-footer #footer-name{font-size:11px;font-weight:700;color:#d5d5d5}
+.overlay{position:fixed;inset:0;z-index:200;isolation:isolate}
+.overlay-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.79)}
+.navigation-panel{position:absolute;inset:0 auto 0 0;width:min(88vw,390px);display:flex;flex-direction:column;background:#0b0b0b;border-right:1px solid rgba(255,255,255,.14);box-shadow:0 4px 40px #000;outline:none}
+.panel-header{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;min-height:72px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.panel-title{font-size:13px;font-weight:800;letter-spacing:.11em;color:#fff}
+.navigation-content{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:16px 18px 40px;scrollbar-color:#343434 #101010;scrollbar-width:thin}
+.nav-top-link,.nav-contact-link{display:block;padding:13px 8px;color:#fff;font-size:12px;font-weight:700;letter-spacing:.05em}
+.nav-top-link:hover,.nav-contact-link:hover{color:var(--accent-strong)}
+.nav-heading{display:block;padding:18px 8px 10px;font-size:11px;letter-spacing:.075em;color:var(--muted)}
+.nav-league{border-bottom:1px solid #252525}
+.nav-league>summary{position:relative;list-style:none;padding:16px 29px 16px 8px;font-size:11px;font-weight:700;letter-spacing:.035em;cursor:pointer;line-height:1.5}
+.nav-league>summary::-webkit-details-marker{display:none}
+.nav-league>summary::after{position:absolute;right:9px;top:50%;transform:translateY(-50%) rotate(45deg);content:"";border-right:1px solid var(--accent-strong);border-bottom:1px solid var(--accent-strong);width:7px;height:7px;transition:transform .2s ease}
+.nav-league[open]>summary::after{transform:translateY(-30%) rotate(225deg)}
+.nav-items{display:flex;flex-direction:column;padding:0 0 10px 8px}
+.nav-items a,.nav-items span{display:block;padding:10px 12px;color:#bcbcbc;font-size:11px;text-transform:uppercase;line-height:1.4}
+.nav-items a:hover{color:#fff;background:#161616}
+.nav-items .no-link{color:#6c6c6c}
+.overlay--search{display:flex;justify-content:center;align-items:flex-start;padding-top:calc(var(--header-height) + var(--topbar-height) + 20px)}
+.search-panel{position:relative;width:min(calc(100vw - 28px),730px);max-height:calc(100dvh - var(--header-height) - var(--topbar-height) - 44px);overflow:hidden;display:flex;flex-direction:column;background:#0b0b0b;border:1px solid var(--line);box-shadow:0 10px 60px #000;outline:none}
+.search-field{display:flex;align-items:center;gap:11px;margin:19px 18px 12px;border-bottom:1px solid rgba(255,255,255,.52);padding:10px 2px;color:var(--accent-strong)}
+.search-field input{width:100%;height:40px;border:0;outline:0;color:#fff;background:transparent;font-size:14px;min-width:0;letter-spacing:.01em}
+.search-field:focus-within{border-bottom-color:#fff}
+.search-field input::-webkit-search-cancel-button{cursor:pointer}
+.search-results{overflow:auto;min-height:80px;padding:4px 18px 19px;overscroll-behavior:contain}
+.search-row{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:13px 8px;border-bottom:1px solid #252525;text-align:left;font-size:12px;letter-spacing:.035em;font-weight:700;text-transform:uppercase;color:#fff;background:transparent;border-top:0;border-left:0;border-right:0;cursor:pointer}
+.search-row:hover,.search-row:focus-visible{background:#171717}
+.search-row small{flex:0 0 auto;font-size:10px;font-weight:400;letter-spacing:.02em;color:#999;text-align:right}
+.search-row.is-unavailable{color:#777;cursor:default}
+.search-message{font-size:12px;color:#a3a3a3;padding:22px 8px}
+.noscript-message{color:#ddd;text-align:center;padding:18px}
+
+@media(min-width:620px){
+  :root{--header-height:108px;--topbar-height:42px;--circle-size:122px;--card-width:154px;--item-gap:21px;--section-bottom:48px}
+  .header-inner{padding-inline:30px}
+  .icon-button{width:60px;height:60px}
+  .icon-button svg{width:30px;height:30px}
+  .brand img{width:min(100%,220px);max-height:82px}
+  .featured-brand{margin-bottom:24px}
+  .carousel{margin-top:24px}
+  .club-card{gap:10px}
+  .club-name{font-size:11px;min-height:30px}
+  .carousel-controls{margin-top:19px;gap:30px}
+  .carousel-arrow{width:60px;height:60px}
+  .carousel-arrow svg{width:32px;height:32px}
+  .announcement-track{font-size:13px}
+}
+@media(min-width:1000px){
+  :root{--circle-size:140px;--card-width:172px;--item-gap:24px;--section-bottom:51px}
+  .brand img{width:min(100%,260px);max-height:90px}
+  .featured-brand{margin-bottom:30px}
+  .carousel{margin-top:26px}
+  .club-name{font-size:11px}
+}
+@media(max-width:480px){
+  .header-inner{grid-template-columns:auto 1fr auto;gap:8px;padding-inline:10px}
+  .header-side--right{gap:7px}
+  .icon-button{width:49px;height:49px}
+  .icon-button svg{width:24px;height:24px}
+  .brand img{width:min(100%,132px);max-height:62px}
+  .announcement-track{gap:28px;font-size:11px;padding-inline:14px}
+  .announcement-track span::after{margin-left:28px}
+}
+@media(max-width:619px){
+  .whatsapp-floating{width:56px;height:56px;right:calc(16px + env(safe-area-inset-right, 0px));bottom:calc(16px + env(safe-area-inset-bottom, 0px))}
+  .whatsapp-floating svg{width:31px;height:31px}
+}
+@media(hover:none){.club-card:hover .club-circle{background:radial-gradient(circle at 35% 30%, rgba(180,180,180,.22), rgba(255,255,255,.08) 45%, rgba(16,16,16,1) 100%)}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .announcement-track{animation:none}
+}
+
+/* Coleções principais */
+.collection-section{scroll-margin-top:calc(var(--header-height) + var(--topbar-height) + 14px)}
+.section-with-heading{padding-top:24px;padding-bottom:var(--section-bottom)}
+.collection-heading{font-size:clamp(17px, 3vw, 25px);font-weight:850;letter-spacing:.085em;text-align:center;margin:0 auto 26px;padding:0 18px;color:#fff;text-transform:uppercase}
+.collection-heading::after{content:"";display:block;width:42px;height:3px;border-radius:2px;background:var(--accent-strong);margin:12px auto 0}
+.collection-circle{background:#111;border:1.8px solid rgba(180,180,180,.58)}
+.collection-circle img{width:100%;height:100%;object-fit:cover}
+.collection-card .club-name{font-size:11px;letter-spacing:.055em}
+.collection-card.is-unavailable{cursor:default}
+.collection-card.is-unavailable .collection-circle{opacity:1}
+.collection-section .carousel{margin-top:22px}
+@media(max-width:619px){
+ .section-with-heading{padding-top:15px}
+ .collection-heading{margin-bottom:20px}
+ .collection-card .club-name{font-size:10px}
+}
+
+/* Logo temporária enquanto a URL personalizada não é fornecida. */
+.brand-placeholder{display:inline-block;font-size:clamp(18px,2.6vw,28px);letter-spacing:.075em;font-weight:900;color:#fff;text-align:center;}
+.brand-placeholder::first-letter{color:var(--accent-strong)}
+
+/* Ajuste responsivo dos ícones do cabeçalho */
+@media(max-width:480px){
+  .header-side--right{gap:5px}
+  .header-inner{gap:5px;padding-inline:8px}
+}
+@media(max-width:359px){
+  .icon-button{width:43px;height:43px}
+  .header-side--right{gap:4px}
+}
+
+.site-header .brand-placeholder{color:#111}
+
+
+/* Novo cabeçalho JF MANTOS: minimalista e alinhado em desktop e mobile. */
+.site-header{box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.header-inner{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);max-width:1460px;gap:16px}
+.site-header .icon-button{width:46px;height:46px;border:0;border-radius:10px;background:transparent;color:#101010;box-shadow:none}
+.site-header .icon-button:hover,.site-header .icon-button[aria-expanded="true"]{background:#f0f0f0;color:#000;border:0;box-shadow:none}
+.header-side--right{justify-content:flex-end;gap:7px}
+.brand{min-width:150px}
+.brand img{width:min(100%,240px);max-height:88px}
+.brand-placeholder{font-size:clamp(17px,2.4vw,25px);letter-spacing:.065em;font-weight:850;white-space:nowrap}
+#menu-button{display:flex;align-items:center;justify-content:center;gap:8px;width:auto;padding:0 12px}
+.menu-label{font-size:12px;font-weight:850;letter-spacing:.12em}
+.icon-button svg{width:26px;height:26px}
+@media(max-width:619px){
+  :root{--header-height:76px}
+  .header-inner{gap:4px;padding:8px 10px;min-height:var(--header-height)}
+  .brand{min-width:0}
+  .brand img{width:min(100%,132px);max-height:57px}
+  .brand-placeholder{font-size:clamp(14px,4vw,19px)}
+  .site-header .icon-button{width:35px;height:42px}
+  .site-header .icon-button svg{width:23px;height:23px}
+  .header-side--right{gap:1px}
+  #menu-button{width:40px;padding:0}
+  .menu-label{display:none}
+  .featured-brand{margin-bottom:18px}
+}
+@media(min-width:620px){
+  .header-inner{min-height:96px}
+  .site-header .icon-button{width:49px;height:49px}
+  #menu-button{width:auto}
+}
+
+
+/* JF MANTOS — cabeçalho inspirado na referência recebida, com fundo preto.
+   Logo e ações na primeira linha; botões sociais amplos na segunda linha. */
+:root{--header-height:270px}
+.site-header{
+  background:#000;
+  min-height:0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.header-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  max-width:1400px;
+  min-height:101px;
+  padding:19px 24px 12px;
+  margin:0 auto;
+}
+.site-header .brand{
+  flex:0 1 480px;
+  justify-content:flex-start;
+  min-width:0;
+  padding:0;
+}
+.site-header .brand img{
+  width:min(100%,413px);
+  max-height:129px;
+  object-fit:contain;
+  object-position:left center;
+}
+.site-header .brand-placeholder{color:#fff;text-align:left;}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:17px;flex:0 0 auto}
+.site-header .header-actions .icon-button{
+  width:69px;
+  height:69px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.07);
+  color:#fff;
+  background:#1b1b1b;
+  box-shadow:none;
+}
+.site-header .header-actions .icon-button svg{width:32px;height:32px}
+.site-header .header-actions .icon-button:hover,
+.site-header .header-actions .icon-button[aria-expanded="true"]{
+  background:#303030;
+  border-color:rgba(255,255,255,.36);
+  box-shadow:none;
+}
+.header-social{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:18px;
+  max-width:1400px;
+  margin:0 auto;
+  padding:12px 24px 24px;
+}
+.social-cta{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-width:0;
+  min-height:90px;
+  gap:24px;
+  padding:14px 20px;
+  border-radius:24px;
+  color:#fff;
+  font-size:clamp(23px,2.6vw,38px);
+  font-weight:750;
+  line-height:1.15;
+  letter-spacing:-.028em;
+  transition:filter .18s ease,transform .18s ease;
+}
+.social-cta svg{display:block;width:49px;height:49px;flex-shrink:0}
+.social-divider{display:block;height:51px;width:2px;background:rgba(255,255,255,.75);flex-shrink:0}
+.social-cta--instagram{background:linear-gradient(112deg,#7838e7 0%,#c733ad 42%,#f64a75 72%,#ffb447 100%)}
+.social-cta--whatsapp{background:linear-gradient(105deg,#22b458 0%,#1ab04e 100%)}
+.social-cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.social-cta:active{transform:scale(.99)}
+.social-cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+/* Apenas escudos de clubes e seleções: fundo branco puro.
+   As imagens das bolinhas de outras coleções permanecem inalteradas. */
+.club-circle:not(.collection-circle){
+  background:#fff;
+  border-color:#e3e3e3;
+  box-shadow:0 6px 17px rgba(0,0,0,.26);
+}
+.club-card:hover .club-circle:not(.collection-circle),
+.club-card:focus-visible .club-circle:not(.collection-circle){
+  background:#f5f5f5;
+  border-color:#d9d9d9;
+  transform:translateY(-1px);
+}
+.club-circle:not(.collection-circle) .club-fallback{color:#181818}
+@media(hover:none){
+  .club-card:hover .club-circle:not(.collection-circle){background:#fff;border-color:#e3e3e3;transform:none}
+}
+@media(max-width:619px){
+  :root{--header-height:194px}
+  .header-inner{min-height:77px;padding:10px 12px 8px;gap:8px}
+  .site-header .brand{flex:0 1 50%}
+  .site-header .brand img{width:min(100%,263px);max-height:92px}
+  .site-header .brand-placeholder{font-size:clamp(16px,4vw,22px)}
+  .header-actions{gap:9px}
+  .site-header .header-actions .icon-button{width:51px;height:51px;border-radius:15px}
+  .site-header .header-actions .icon-button svg{width:26px;height:26px}
+  .header-social{gap:10px;padding:8px 12px 13px}
+  .social-cta{min-height:60px;border-radius:16px;gap:9px;padding:10px 7px;font-size:clamp(12px,3.5vw,17px);letter-spacing:-.015em}
+  .social-cta svg{width:28px;height:28px}
+  .social-divider{width:1px;height:29px}
+}
+@media(min-width:620px) and (max-width:999px){
+  :root{--header-height:248px}
+  .header-inner{min-height:98px;padding:16px 22px 12px}
+  .header-social{padding:10px 22px 20px}
+  .social-cta{min-height:80px;gap:19px}
+  .social-cta svg{width:43px;height:43px}
+  .social-divider{height:44px}
+}
+@media(max-width:350px){
+  .site-header .header-actions .icon-button{width:43px;height:43px;border-radius:13px}
+  .header-actions{gap:6px}
+  .social-cta{font-size:12px;gap:6px;padding:8px 5px}
+  .social-cta svg{width:23px;height:23px}
+}
+
+/* DEDÉ STORE — ajustes não destrutivos: escudos maiores, com margem interna, e navegação minimalista. */
+:root {--circle-size:116px;--card-width:138px;--item-gap:15px}
+.club-circle:not(.collection-circle) img {width:78%;height:78%;object-fit:contain;object-position:center}
+.club-circle:not(.collection-circle) {overflow:hidden;border-width:1px}
+.carousel-controls {gap:12px;margin-top:15px}
+.carousel-arrow {width:39px;height:39px;background:transparent;border:1px solid rgba(255,255,255,.28);border-radius:50%;color:#f4f4f4;box-shadow:none;transition:background .2s,border-color .2s,transform .2s}
+.carousel-arrow svg {width:19px;height:19px}
+.carousel-arrow:hover {background:#1b1b1b;border-color:#eee;box-shadow:none;transform:none}
+.carousel-arrow:focus-visible{outline:2px solid #eee;outline-offset:3px}
+.site-header .brand img {object-fit:contain;object-position:left center}
+@media(min-width:620px) {:root {--circle-size:146px;--card-width:167px;--item-gap:18px} .carousel-arrow{width:42px;height:42px}.carousel-arrow svg{width:20px;height:20px}}
+@media(min-width:1000px) {:root {--circle-size:166px;--card-width:190px;--item-gap:21px}}
+
+/* DEDÉ STORE — sem banner superior; primeira seção com coleções em tamanho ampliado. */
+:root {--circle-size:132px;--card-width:156px;--item-gap:15px}
+.club-circle:not(.collection-circle) img {width:82%;height:82%;object-fit:contain}
+/* Somente a primeira seção: cards mais amplos e imagens circulares grandes. */
+#outras-colecoes .carousel {margin-top:10px}
+#outras-colecoes .collection-card {flex-basis:188px;width:188px;gap:14px}
+#outras-colecoes .collection-circle {width:170px;height:170px}
+#outras-colecoes .collection-card .club-name {font-size:12px;letter-spacing:.06em}
+#outras-colecoes .carousel-set {gap:18px;padding-right:18px}
+@media(min-width:620px){
+ :root {--circle-size:160px;--card-width:185px;--item-gap:20px}
+ #outras-colecoes .collection-card {flex-basis:236px;width:236px}
+ #outras-colecoes .collection-circle {width:220px;height:220px}
+ #outras-colecoes .collection-card .club-name {font-size:13px}
+ #outras-colecoes .carousel-set {gap:24px;padding-right:24px}
+}
+@media(min-width:1000px){
+ :root {--circle-size:180px;--card-width:207px;--item-gap:23px}
+ #outras-colecoes .collection-card {flex-basis:274px;width:274px}
+ #outras-colecoes .collection-circle {width:252px;height:252px}
+ #outras-colecoes .carousel-set {gap:30px;padding-right:30px}
+}
+
+
+/* DEDÉ STORE — atualização solicitada em 2026-11-17
+   Cabeçalho no formato da referência com fundo preto;
+   bolinhas das principais coleções sem borda;
+   cards dos escudos mais compactos mantendo o tamanho das bolinhas;
+   carrossel lateral automático preservado via script. */
+
+:root{
+  --header-height:250px;
+}
+
+.site-header{
+  background:#000;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.header-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  max-width:1480px;
+  min-height:102px;
+  padding:18px 24px 10px;
+  margin:0 auto;
+}
+
+.site-header .brand{
+  flex:0 1 auto;
+  min-width:0;
+  padding:0;
+}
+
+.site-header .brand img{
+  width:min(100%,430px);
+  max-height:122px;
+  object-fit:contain;
+  object-position:left center;
+}
+
+.site-header .brand-placeholder{
+  color:#fff;
+  text-align:left;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:16px;
+  flex:0 0 auto;
+}
+
+.site-header .header-actions .icon-button{
+  width:74px;
+  height:74px;
+  border-radius:24px;
+  border:0;
+  background:#f2f2f2;
+  color:#0f1726;
+  box-shadow:none;
+}
+
+.site-header .header-actions .icon-button svg{
+  width:35px;
+  height:35px;
+}
+
+.site-header .header-actions .icon-button:hover,
+.site-header .header-actions .icon-button[aria-expanded='true']{
+  background:#ffffff;
+  color:#000;
+  transform:none;
+  box-shadow:none;
+}
+
+.header-social{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:22px;
+  max-width:1480px;
+  margin:0 auto;
+  padding:12px 24px 24px;
+}
+
+.social-cta{
+  min-height:96px;
+  border-radius:26px;
+  gap:24px;
+  padding:14px 22px;
+  justify-content:center;
+  font-size:clamp(24px,2.5vw,40px);
+  font-weight:760;
+  letter-spacing:-.03em;
+  color:#fff;
+}
+
+.social-cta svg{
+  width:50px;
+  height:50px;
+}
+
+.social-divider{
+  width:2px;
+  height:52px;
+  background:rgba(255,255,255,.75);
+}
+
+/* Principais coleções: remover bordas das bolinhas */
+#outras-colecoes .collection-circle{
+  border:none;
+  box-shadow:none;
+  background:transparent;
+}
+
+/* Escudos dos clubes: cards mais compactos, mantendo bolinhas grandes */
+.club-card:not(.collection-card){
+  flex:0 0 calc(var(--circle-size) + 10px);
+  width:calc(var(--circle-size) + 10px);
+  gap:8px;
+}
+
+.club-card:not(.collection-card) .club-name{
+  font-size:11px;
+  line-height:1.22;
+}
+
+.club-circle:not(.collection-circle){
+  border-width:1px;
+}
+
+.carousel-controls{
+  gap:10px;
+  margin-top:14px;
+}
+
+.carousel-arrow{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.24);
+  color:#f4f4f4;
+  box-shadow:none;
+}
+
+.carousel-arrow svg{
+  width:18px;
+  height:18px;
+}
+
+.carousel-arrow:hover{
+  background:#1b1b1b;
+  border-color:#f1f1f1;
+  transform:none;
+  box-shadow:none;
+}
+
+@media(max-width:619px){
+  :root{--header-height:186px}
+  .header-inner{
+    min-height:78px;
+    padding:10px 12px 8px;
+    gap:10px;
+  }
+  .site-header .brand{
+    flex:0 1 55%;
+  }
+  .site-header .brand img{
+    width:min(100%,270px);
+    max-height:88px;
+  }
+  .header-actions{gap:10px}
+  .site-header .header-actions .icon-button{
+    width:52px;
+    height:52px;
+    border-radius:16px;
+  }
+  .site-header .header-actions .icon-button svg{
+    width:25px;
+    height:25px;
+  }
+  .header-social{
+    gap:10px;
+    padding:8px 12px 14px;
+  }
+  .social-cta{
+    min-height:60px;
+    border-radius:16px;
+    gap:8px;
+    padding:10px 8px;
+    font-size:clamp(12px,3.5vw,17px);
+  }
+  .social-cta svg{width:28px;height:28px}
+  .social-divider{width:1px;height:28px}
+  .club-card:not(.collection-card){
+    flex-basis:calc(var(--circle-size) + 6px);
+    width:calc(var(--circle-size) + 6px);
+  }
+  .club-card:not(.collection-card) .club-name{
+    font-size:10px;
+  }
+}
+
+@media(min-width:620px) and (max-width:999px){
+  :root{--header-height:236px}
+  .site-header .header-actions .icon-button{
+    width:66px;
+    height:66px;
+    border-radius:22px;
+  }
+  .header-social{padding:10px 22px 20px}
+  .social-cta{min-height:84px;font-size:clamp(20px,2.9vw,32px)}
+  .social-cta svg{width:42px;height:42px}
+  .social-divider{height:42px}
+  .club-card:not(.collection-card){
+    flex-basis:calc(var(--circle-size) + 8px);
+    width:calc(var(--circle-size) + 8px);
+  }
+}
+
+@media(min-width:1000px){
+  .club-card:not(.collection-card){
+    flex-basis:calc(var(--circle-size) + 10px);
+    width:calc(var(--circle-size) + 10px);
+  }
+}
+
+
+/* CORREÇÃO FINAL — cabeçalho mais fiel à referência
+   Linha 1: logo à esquerda, menu e pesquisa à direita.
+   Linha 2: Instagram e WhatsApp logo abaixo, em dois retângulos grandes. */
+
+.announcement-bar{
+  display:none;
+}
+.sticky-shell{
+  background:#000;
+}
+html{
+  scroll-padding-top:calc(var(--header-height) + 18px);
+}
+:root{
+  --topbar-height:0px;
+  --header-height:242px;
+}
+.site-header{
+  background:#000;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.header-inner{
+  max-width:1480px;
+  min-height:98px;
+  padding:18px 26px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.site-header .brand{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  flex:1 1 auto;
+  min-width:0;
+}
+.site-header .brand img{
+  width:min(100%,430px);
+  max-height:120px;
+  object-fit:contain;
+  object-position:left center;
+}
+.site-header .brand-placeholder{
+  color:#fff;
+  font-size:clamp(20px,2.5vw,28px);
+}
+.header-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:16px;
+  flex:0 0 auto;
+}
+.site-header .header-actions .icon-button{
+  width:72px;
+  height:72px;
+  border-radius:24px;
+  border:0;
+  background:#f1f1f1;
+  color:#0f1726;
+  box-shadow:none;
+}
+.site-header .header-actions .icon-button svg{
+  width:34px;
+  height:34px;
+}
+.site-header .header-actions .icon-button:hover,
+.site-header .header-actions .icon-button[aria-expanded='true']{
+  background:#ffffff;
+  color:#000;
+  box-shadow:none;
+  transform:none;
+}
+.header-social{
+  max-width:1480px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+  padding:10px 26px 24px;
+  margin:0 auto;
+}
+.social-cta{
+  min-height:92px;
+  border-radius:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:22px;
+  padding:14px 24px;
+  font-size:clamp(22px,2.35vw,38px);
+  font-weight:760;
+  letter-spacing:-.03em;
+  color:#fff;
+}
+.social-cta svg{
+  width:48px;
+  height:48px;
+}
+.social-divider{
+  width:2px;
+  height:50px;
+  background:rgba(255,255,255,.75);
+}
+@media(max-width:619px){
+  :root{--header-height:176px}
+  .header-inner{
+    min-height:72px;
+    padding:10px 12px 8px;
+    gap:10px;
+  }
+  .site-header .brand img{
+    width:min(100%,245px);
+    max-height:74px;
+  }
+  .site-header .header-actions .icon-button{
+    width:50px;
+    height:50px;
+    border-radius:16px;
+  }
+  .site-header .header-actions .icon-button svg{
+    width:24px;
+    height:24px;
+  }
+  .header-social{
+    gap:10px;
+    padding:8px 12px 14px;
+  }
+  .social-cta{
+    min-height:58px;
+    border-radius:16px;
+    gap:8px;
+    padding:10px 8px;
+    font-size:clamp(12px,3.4vw,16px);
+  }
+  .social-cta svg{width:28px;height:28px}
+  .social-divider{width:1px;height:28px}
+}
+@media(min-width:620px) and (max-width:999px){
+  :root{--header-height:225px}
+  .header-inner{padding:16px 22px 10px}
+  .site-header .header-actions .icon-button{width:64px;height:64px;border-radius:20px}
+  .site-header .header-actions .icon-button svg{width:30px;height:30px}
+  .header-social{padding:10px 22px 20px}
+  .social-cta{min-height:78px;font-size:clamp(18px,2.5vw,28px)}
+  .social-cta svg{width:40px;height:40px}
+  .social-divider{height:40px}
+}
